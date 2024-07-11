@@ -8,15 +8,14 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const DB_URL =
-  "mongodb+srv://safa-rahaf-assignment-4-user:safa-rahaf-assignment-4-user@safa-assignment-4.mgastkx.mongodb.net/?retryWrites=true&w=majority&appName=safa-assignment-4";
 
 app.use(cors());
 app.use(express.json());
 
 async function main() {
   try {
-    await mongoose.connect(DB_URL, {
+    // @ts-ignore-next-line
+    await mongoose.connect(process.env.DB_CONNECTION, {
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
       tlsAllowInvalidHostnames: true,
@@ -30,6 +29,7 @@ async function main() {
     });
   } catch (err) {
     console.error("MongoDB connection error:", err);
+    throw new Error("MongoDB connection error");
   }
 }
 
