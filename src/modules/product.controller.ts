@@ -4,16 +4,19 @@ import { ProductValidation } from "./product.validation";
 
 const createProducts = async (req: Request, res: Response) => {
   try {
+    console.log("Received request body:", req.body);
     const validation = ProductValidation.createProductValidation.safeParse(
       req.body
     );
     if (!validation.success) {
+      console.log("Validation failed:", validation.error.errors);
       return res.status(400).json(validation.error.errors);
     }
 
     const product = await ProductServices.createProduct(req.body);
     res.status(201).json(product);
   } catch (error: any) {
+    console.error("Error in createProducts:", error);
     res.status(500).json({ error: error.message });
   }
 };

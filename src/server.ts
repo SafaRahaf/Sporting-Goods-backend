@@ -3,7 +3,6 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { productRoutes } from "./routes/productRoutes";
-import products from "./data/products";
 
 dotenv.config();
 
@@ -18,11 +17,8 @@ app.use(express.json());
 async function main() {
   try {
     await mongoose.connect(DB_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
-      tls: true,
       tlsAllowInvalidHostnames: true,
       tlsAllowInvalidCertificates: true,
     } as any);
